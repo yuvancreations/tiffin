@@ -1,0 +1,1623 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="FreshBites Tiffin Service - Healthy meals delivered daily to your doorstep. Fresh, nutritious, and delicious food for breakfast, lunch, and dinner.">
+    <meta name="keywords" content="tiffin service, meal delivery, healthy food, home-cooked meals, daily tiffin">
+    <title>FreshBites Tiffin Service - Healthy Meals Delivered Daily</title>
+    
+    <!-- Bootstrap 5.3 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary-color: #ff6b6b;
+            --secondary-color: #4ecdc4;
+            --accent-color: #ffd93d;
+            --success-color: #6bcf7f;
+            --dark-color: #2d3436;
+            --light-color: #f8f9fa;
+            --glass-bg: rgba(255, 255, 255, 0.1);
+            --glass-border: rgba(255, 255, 255, 0.2);
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        [data-theme="dark"] {
+            --primary-color: #ff8787;
+            --secondary-color: #5fdfd6;
+            --dark-color: #f8f9fa;
+            --light-color: #1a1a2e;
+            --glass-bg: rgba(0, 0, 0, 0.3);
+            --glass-border: rgba(255, 255, 255, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--light-color);
+            color: var(--dark-color);
+            overflow-x: hidden;
+            transition: var(--transition);
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+        }
+
+        /* Loading Animation */
+        .loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.5s, visibility 0.5s;
+        }
+
+        .loader.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .loader-icon {
+            font-size: 3rem;
+            color: white;
+            animation: bounce 1s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        /* Navbar */
+        .navbar {
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--glass-border);
+            transition: var(--transition);
+            padding: 1rem 0;
+        }
+
+        .navbar.scrolled {
+            background: rgba(255, 255, 255, 0.95);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+
+        [data-theme="dark"] .navbar.scrolled {
+            background: rgba(26, 26, 46, 0.95);
+        }
+
+        .navbar-brand {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 700;
+            font-size: 1.5rem;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-link {
+            color: var(--dark-color) !important;
+            font-weight: 500;
+            margin: 0 0.5rem;
+            position: relative;
+            transition: var(--transition);
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+            transition: var(--transition);
+            transform: translateX(-50%);
+        }
+
+        .nav-link:hover::after,
+        .nav-link.active::after {
+            width: 80%;
+        }
+
+        /* Theme Toggle */
+        .theme-toggle {
+            background: var(--glass-bg);
+            border: 2px solid var(--glass-border);
+            border-radius: 50px;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: var(--transition);
+            margin-left: 1rem;
+        }
+
+        .theme-toggle:hover {
+            transform: scale(1.1);
+            background: var(--primary-color);
+            color: white;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #ff6b6b20, #4ecdc420);
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+            padding: 100px 0 50px;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, var(--accent-color)30, transparent);
+            animation: float 20s infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            50% { transform: translate(-50px, 50px) rotate(180deg); }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1.5rem;
+            animation: fadeInUp 1s;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            color: var(--dark-color);
+            margin-bottom: 2rem;
+            animation: fadeInUp 1s 0.2s both;
+        }
+
+        .hero-image {
+            animation: fadeInUp 1s 0.4s both;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Glass Card */
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 2rem;
+            transition: var(--transition);
+            height: 100%;
+        }
+
+        .glass-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            border-color: var(--primary-color);
+        }
+
+        /* Service Cards */
+        .service-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: white;
+            margin-bottom: 1.5rem;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        /* Buttons */
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            border: none;
+            padding: 12px 30px;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: var(--transition);
+            box-shadow: 0 5px 15px rgba(255, 107, 107, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(255, 107, 107, 0.4);
+        }
+
+        /* Timeline */
+        .timeline {
+            position: relative;
+            padding: 2rem 0;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(180deg, var(--primary-color), var(--secondary-color));
+            transform: translateX(-50%);
+        }
+
+        .timeline-item {
+            margin-bottom: 3rem;
+            position: relative;
+        }
+
+        .timeline-icon {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+            z-index: 2;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        /* Carousel */
+        .menu-carousel .carousel-item img {
+            border-radius: 20px;
+            height: 400px;
+            object-fit: cover;
+        }
+
+        /* Testimonials */
+        .testimonial-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            position: relative;
+            margin: 1rem;
+        }
+
+        [data-theme="dark"] .testimonial-card {
+            background: #2d3436;
+        }
+
+        .testimonial-card::before {
+            content: '"';
+            position: absolute;
+            top: -20px;
+            left: 20px;
+            font-size: 5rem;
+            color: var(--primary-color);
+            opacity: 0.3;
+        }
+
+        /* Pricing Cards */
+        .pricing-card {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            text-align: center;
+            transition: var(--transition);
+            border: 2px solid transparent;
+        }
+
+        [data-theme="dark"] .pricing-card {
+            background: #2d3436;
+        }
+
+        .pricing-card:hover {
+            transform: scale(1.05);
+            border-color: var(--primary-color);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+        }
+
+        .pricing-card.featured {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            transform: scale(1.05);
+        }
+
+        /* Counter */
+        .counter {
+            font-size: 3rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Contact Form */
+        .form-control {
+            border-radius: 10px;
+            border: 2px solid var(--glass-border);
+            padding: 12px;
+            transition: var(--transition);
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+        }
+
+        .form-control:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 0.2rem rgba(255, 107, 107, 0.25);
+            background: white;
+        }
+
+        /* WhatsApp Button */
+        .whatsapp-float {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            background: #25D366;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: white;
+            box-shadow: 0 5px 20px rgba(37, 211, 102, 0.5);
+            z-index: 1000;
+            cursor: pointer;
+            transition: var(--transition);
+            animation: bounce 2s infinite;
+        }
+
+        .whatsapp-float:hover {
+            transform: scale(1.1);
+            box-shadow: 0 10px 30px rgba(37, 211, 102, 0.7);
+        }
+
+        /* Accordion */
+        .accordion-button {
+            background: var(--glass-bg);
+            color: var(--dark-color);
+            font-weight: 600;
+        }
+
+        .accordion-button:not(.collapsed) {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--dark-color);
+            color: white;
+            padding: 3rem 0 1rem;
+        }
+
+        [data-theme="dark"] footer {
+            background: #0f0f1e;
+        }
+
+        .social-links a {
+            width: 40px;
+            height: 40px;
+            background: var(--glass-bg);
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 0.5rem;
+            color: white;
+            transition: var(--transition);
+        }
+
+        .social-links a:hover {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            transform: translateY(-5px);
+        }
+
+        /* Modal */
+        .modal-content {
+            border-radius: 20px;
+            border: none;
+            background: var(--light-color);
+        }
+
+        /* Progress Bar */
+        .progress {
+            height: 30px;
+            border-radius: 15px;
+            background: var(--glass-bg);
+        }
+
+        .progress-bar {
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+            border-radius: 15px;
+        }
+
+        /* Scroll to Top Button */
+        .scroll-to-top {
+            position: fixed;
+            bottom: 100px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: none;
+            z-index: 1000;
+            border: none;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .hero p {
+                font-size: 1rem;
+            }
+
+            .timeline::before {
+                left: 30px;
+            }
+
+            .timeline-icon {
+                left: 30px;
+            }
+
+            .timeline-item {
+                padding-left: 80px;
+            }
+        }
+
+        /* Section Spacing */
+        section {
+            padding: 80px 0;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            color: #6c757d;
+            margin-bottom: 3rem;
+        }
+
+        /* Map Container */
+        .map-container {
+            border-radius: 20px;
+            overflow: hidden;
+            height: 400px;
+        }
+
+        /* Badge */
+        .badge-custom {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            font-weight: 600;
+            display: inline-block;
+            margin: 0.5rem;
+        }
+
+        /* Team Photo Placeholder */
+        .team-photo {
+            width: 100%;
+            height: 300px;
+            background: linear-gradient(135deg, var(--primary-color)30, var(--secondary-color)30);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            color: white;
+        }
+
+        /* Food Image Placeholder */
+        .food-placeholder {
+            width: 100%;
+            height: 400px;
+            background: linear-gradient(135deg, #ff6b6b30, #ffd93d30);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 5rem;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Loader -->
+    <div class="loader">
+        <i class="fas fa-utensils loader-icon"></i>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="#home">
+                <i class="fas fa-bowl-food"></i> FreshBites
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#home">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#about">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#contact">Contact</a>
+                    </li>
+                </ul>
+                <div class="theme-toggle" onclick="toggleTheme()">
+                    <i class="fas fa-moon" id="themeIcon"></i>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Homepage -->
+    <div id="home">
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col-lg-6 hero-content">
+                        <h1>Healthy Meals, Delivered Daily</h1>
+                        <p>Experience the taste of home-cooked food, delivered fresh to your doorstep every day. Nutritious, delicious, and always on time.</p>
+                        <button class="btn btn-primary btn-lg me-3" data-bs-toggle="modal" data-bs-target="#customizerModal">
+                            <i class="fas fa-utensils me-2"></i>Customize Your Meal
+                        </button>
+                        <button class="btn btn-outline-primary btn-lg" onclick="document.getElementById('plans').scrollIntoView({behavior: 'smooth'})">
+                            View Plans
+                        </button>
+                    </div>
+                    <div class="col-lg-6 hero-image">
+                        <div class="food-placeholder">
+                            🍱
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Service Cards -->
+        <section class="py-5">
+            <div class="container">
+                <h2 class="section-title">Our Services</h2>
+                <p class="section-subtitle">Delicious meals for every time of the day</p>
+                <div class="row g-4">
+                    <div class="col-md-4">
+                        <div class="glass-card text-center">
+                            <div class="service-icon mx-auto">
+                                <i class="fas fa-mug-hot"></i>
+                            </div>
+                            <h3>Breakfast</h3>
+                            <p>Start your day right with our nutritious breakfast options. Fresh parathas, idlis, poha, and more.</p>
+                            <span class="badge-custom">7:00 AM - 9:00 AM</span>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="glass-card text-center">
+                            <div class="service-icon mx-auto">
+                                <i class="fas fa-bowl-rice"></i>
+                            </div>
+                            <h3>Lunch</h3>
+                            <p>Wholesome lunch with dal, sabzi, roti, rice, and salad. Balanced nutrition for your busy day.</p>
+                            <span class="badge-custom">12:00 PM - 2:00 PM</span>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="glass-card text-center">
+                            <div class="service-icon mx-auto">
+                                <i class="fas fa-plate-wheat"></i>
+                            </div>
+                            <h3>Dinner</h3>
+                            <p>End your day with comfort food. Light yet satisfying dinner options delivered to your home.</p>
+                            <span class="badge-custom">7:00 PM - 9:00 PM</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- How It Works -->
+        <section class="py-5 bg-light">
+            <div class="container">
+                <h2 class="section-title">How It Works</h2>
+                <p class="section-subtitle">Get started in 3 easy steps</p>
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-icon">
+                            <i class="fas fa-1"></i>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 text-end">
+                                <div class="glass-card">
+                                    <h4>Choose Your Plan</h4>
+                                    <p>Select from our breakfast, lunch, or dinner plans. Customize your preferences and dietary requirements.</p>
+                                </div>
+                            </div>
+                            <div class="col-md-6"></div>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-icon">
+                            <i class="fas fa-2"></i>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6"></div>
+                            <div class="col-md-6">
+                                <div class="glass-card">
+                                    <h4>We Prepare Fresh</h4>
+                                    <p>Our chefs prepare your meals fresh daily using quality ingredients and maintaining high hygiene standards.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-icon">
+                            <i class="fas fa-3"></i>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 text-end">
+                                <div class="glass-card">
+                                    <h4>Delivered to You</h4>
+                                    <p>Enjoy hot, delicious meals delivered right to your doorstep at your preferred time. Track your order in real-time.</p>
+                                </div>
+                            </div>
+                            <div class="col-md-6"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Daily Menu -->
+        <section class="py-5">
+            <div class="container">
+                <h2 class="section-title">Today's Menu</h2>
+                <p class="section-subtitle">Fresh dishes prepared with love</p>
+                <div id="menuCarousel" class="carousel slide menu-carousel" data-bs-ride="carousel">
+                    <div class="carousel-indicators">
+                        <button type="button" data-bs-target="#menuCarousel" data-bs-slide-to="0" class="active"></button>
+                        <button type="button" data-bs-target="#menuCarousel" data-bs-slide-to="1"></button>
+                        <button type="button" data-bs-target="#menuCarousel" data-bs-slide-to="2"></button>
+                    </div>
+                    <div class="carousel-inner">
+                        <div class="carousel-item active">
+                            <div class="food-placeholder">🍛</div>
+                            <div class="carousel-caption">
+                                <h5>Dal Makhani with Jeera Rice</h5>
+                                <p>Creamy lentils with aromatic rice and fresh salad</p>
+                            </div>
+                        </div>
+                        <div class="carousel-item">
+                            <div class="food-placeholder">🥘</div>
+                            <div class="carousel-caption">
+                                <h5>Paneer Butter Masala</h5>
+                                <p>Rich cottage cheese curry with naan and raita</p>
+                            </div>
+                        </div>
+                        <div class="carousel-item">
+                            <div class="food-placeholder">🍲</div>
+                            <div class="carousel-caption">
+                                <h5>Chole Bhature</h5>
+                                <p>Spicy chickpeas with fluffy bhature and pickles</p>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="carousel-control-prev" type="button" data-bs-target="#menuCarousel" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon"></span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#menuCarousel" data-bs-slide="next">
+                        <span class="carousel-control-next-icon"></span>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Testimonials -->
+        <section class="py-5 bg-light">
+            <div class="container">
+                <h2 class="section-title">What Our Customers Say</h2>
+                <p class="section-subtitle">Real reviews from real people</p>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="testimonial-card">
+                            <div class="d-flex align-items-center mb-3">
+                                <div class="me-3">
+                                    <i class="fas fa-user-circle fa-3x" style="color: var(--primary-color)"></i>
+                                </div>
+                                <div>
+                                    <h5 class="mb-0">Priya Sharma</h5>
+                                    <div class="text-warning">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <p>The variety and quality are outstanding. Love the customization options and the hygiene standards they maintain. 5 stars!</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="testimonial-card">
+                            <div class="d-flex align-items-center mb-3">
+                                <div class="me-3">
+                                    <i class="fas fa-user-circle fa-3x" style="color: var(--secondary-color)"></i>
+                                </div>
+                                <div>
+                                    <h5 class="mb-0">Rahul Verma</h5>
+                                    <div class="text-warning">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <p>The food tastes just like home! Fresh, healthy, and always on time. FreshBites has made my life so much easier.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="testimonial-card">
+                            <div class="d-flex align-items-center mb-3">
+                                <div class="me-3">
+                                    <i class="fas fa-user-circle fa-3x" style="color: var(--success-color)"></i>
+                                </div>
+                                <div>
+                                    <h5 class="mb-0">Anjali Patel</h5>
+                                    <div class="text-warning">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <p>As a working professional, FreshBites is a lifesaver. Nutritious meals without the hassle of cooking. Highly recommended!</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Subscription Plans -->
+        <section class="py-5" id="plans">
+            <div class="container">
+                <h2 class="section-title">Choose Your Plan</h2>
+                <p class="section-subtitle">Flexible options to suit your needs</p>
+                <div class="row g-4">
+                    <div class="col-md-4">
+                        <div class="pricing-card">
+                            <h3>Basic</h3>
+                            <div class="counter">₹2,999</div>
+                            <p class="text-muted">/month</p>
+                            <ul class="list-unstyled my-4">
+                                <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Lunch OR Dinner</li>
+                                <li class="mb-2"><i class="fas fa-check text-success me-2"></i>5 Days a Week</li>
+                                <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Standard Menu</li>
+                                <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Free Delivery</li>
+                            </ul>
+                            <button class="btn btn-outline-primary w-100">Subscribe Now</button>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="pricing-card featured">
+                            <div class="badge bg-warning mb-3">Most Popular</div>
+                            <h3>Premium</h3>
+                            <div class="counter" style="-webkit-text-fill-color: white;">₹4,999</div>
+                            <p>/month</p>
+                            <ul class="list-unstyled my-4">
+                                <li class="mb-2"><i class="fas fa-check me-2"></i>Lunch AND Dinner</li>
+                                <li class="mb-2"><i class="fas fa-check me-2"></i>7 Days a Week</li>
+                                <li class="mb-2"><i class="fas fa-check me-2"></i>Premium Menu</li>
+                                <li class="mb-2"><i class="fas fa-check me-2"></i>Free Delivery</li>
+                                <li class="mb-2"><i class="fas fa-check me-2"></i>Diet Customization</li>
+                            </ul>
+                            <button class="btn btn-light w-100">Subscribe Now</button>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="pricing-card">
+                            <h3>Complete</h3>
+                            <div class="counter">₹6,999</div>
+                            <p class="text-muted">/month</p>
+                            <ul class="list-unstyled my-4">
+                                <li class="mb-2"><i class="fas fa-check text-success me-2"></i>All 3 Meals</li>
+                                <li class="mb-2"><i class="fas fa-check text-success me-2"></i>7 Days a Week</li>
+                                <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Gourmet Menu</li>
+                                <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Priority Delivery</li>
+                                <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Full Customization</li>
+                                <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Nutrition Consultation</li>
+                            </ul>
+                            <button class="btn btn-outline-primary w-100">Subscribe Now</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- About Us Page -->
+    <section id="about" class="py-5">
+        <div class="container">
+            <!-- Company Story -->
+            <div class="row align-items-center mb-5">
+                <div class="col-lg-6">
+                    <h2 class="section-title text-start">Our Story</h2>
+                    <p class="lead">Founded in 2020, FreshBites started with a simple mission: to bring the comfort of home-cooked meals to busy professionals and families.</p>
+                    <p>What began as a small kitchen serving 20 customers has grown into a trusted tiffin service delivering over 500 meals daily. Our passion for fresh, nutritious food and our commitment to quality has made us the preferred choice for health-conscious individuals.</p>
+                    <p>Every meal we prepare is crafted with love, using locally-sourced ingredients and traditional recipes passed down through generations. We believe that good food is the foundation of good health, and we're committed to making it accessible to everyone.</p>
+                </div>
+                <div class="col-lg-6">
+                    <div class="team-photo">
+                        <i class="fas fa-users"></i>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Mission & Values -->
+            <div class="row g-4 mb-5">
+                <div class="col-md-6">
+                    <div class="glass-card h-100">
+                        <div class="service-icon">
+                            <i class="fas fa-bullseye"></i>
+                        </div>
+                        <h3>Our Mission</h3>
+                        <p>To provide nutritious, delicious, and affordable home-cooked meals that nourish the body and soul. We strive to make healthy eating convenient for everyone, one meal at a time.</p>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="glass-card h-100">
+                        <div class="service-icon">
+                            <i class="fas fa-heart"></i>
+                        </div>
+                        <h3>Our Values</h3>
+                        <ul class="list-unstyled">
+                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Quality First</li>
+                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Hygiene & Safety</li>
+                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Customer Satisfaction</li>
+                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Sustainability</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Food Quality Standards -->
+            <div class="text-center mb-5">
+                <h2 class="section-title">Quality Standards</h2>
+                <p class="section-subtitle">We never compromise on quality</p>
+                <div class="row g-4">
+                    <div class="col-md-3 col-6">
+                        <div class="glass-card text-center">
+                            <i class="fas fa-leaf fa-3x mb-3" style="color: var(--success-color)"></i>
+                            <h5>Fresh Ingredients</h5>
+                            <p>100% fresh produce sourced daily</p>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-6">
+                        <div class="glass-card text-center">
+                            <i class="fas fa-shield-alt fa-3x mb-3" style="color: var(--primary-color)"></i>
+                            <h5>FSSAI Certified</h5>
+                            <p>Licensed and certified kitchen</p>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-6">
+                        <div class="glass-card text-center">
+                            <i class="fas fa-hands-wash fa-3x mb-3" style="color: var(--secondary-color)"></i>
+                            <h5>Hygiene First</h5>
+                            <p>ISO certified hygiene standards</p>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-6">
+                        <div class="glass-card text-center">
+                            <i class="fas fa-award fa-3x mb-3" style="color: var(--accent-color)"></i>
+                            <h5>Quality Assured</h5>
+                            <p>Every meal quality checked</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Certifications -->
+            <div class="text-center mb-5">
+                <h2 class="section-title">Our Certifications</h2>
+                <div class="d-flex justify-content-center flex-wrap gap-3">
+                    <span class="badge-custom"><i class="fas fa-certificate me-2"></i>FSSAI Licensed</span>
+                    <span class="badge-custom"><i class="fas fa-certificate me-2"></i>ISO 22000:2018</span>
+                    <span class="badge-custom"><i class="fas fa-certificate me-2"></i>HACCP Certified</span>
+                    <span class="badge-custom"><i class="fas fa-certificate me-2"></i>Organic Certified</span>
+                </div>
+            </div>
+
+            <!-- Achievements Counter -->
+            <div class="row text-center">
+                <div class="col-md-3 col-6 mb-4">
+                    <div class="counter" data-target="500">0</div>
+                    <p class="mt-2">Daily Meals</p>
+                </div>
+                <div class="col-md-3 col-6 mb-4">
+                    <div class="counter" data-target="5000">0</div>
+                    <p class="mt-2">Happy Customers</p>
+                </div>
+                <div class="col-md-3 col-6 mb-4">
+                    <div class="counter" data-target="4">0</div>
+                    <p class="mt-2">Years of Service</p>
+                </div>
+                <div class="col-md-3 col-6 mb-4">
+                    <div class="counter" data-target="98">0</div>
+                    <p class="mt-2">Customer Satisfaction %</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Us Page -->
+    <section id="contact" class="py-5 bg-light">
+        <div class="container">
+            <h2 class="section-title">Get In Touch</h2>
+            <p class="section-subtitle">We'd love to hear from you</p>
+
+            <div class="row g-4">
+                <!-- Contact Form -->
+                <div class="col-lg-6">
+                    <div class="glass-card">
+                        <h3 class="mb-4">Send Us a Message</h3>
+                        <form id="contactForm">
+                            <div class="mb-3">
+                                <label class="form-label">Name *</label>
+                                <input type="text" class="form-control" id="name" required>
+                                <div class="invalid-feedback">Please enter your name</div>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Email *</label>
+                                <input type="email" class="form-control" id="email" required>
+                                <div class="invalid-feedback">Please enter a valid email</div>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Phone *</label>
+                                <input type="tel" class="form-control" id="phone" pattern="[0-9]{10}" required>
+                                <div class="invalid-feedback">Please enter a valid 10-digit phone number</div>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Message *</label>
+                                <textarea class="form-control" id="message" rows="4" required></textarea>
+                                <div class="invalid-feedback">Please enter your message</div>
+                            </div>
+                            <button type="submit" class="btn btn-primary w-100">
+                                <i class="fas fa-paper-plane me-2"></i>Send Message
+                            </button>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Contact Info & Map -->
+                <div class="col-lg-6">
+                    <div class="glass-card mb-4">
+                        <h3 class="mb-4">Contact Information</h3>
+                        <div class="mb-3">
+                            <i class="fas fa-map-marker-alt text-primary me-3"></i>
+                            <strong>Address:</strong><br>
+                            <span class="ms-4">123 Main Street, City Name, State - 123456</span>
+                        </div>
+                        <div class="mb-3">
+                            <i class="fas fa-phone text-primary me-3"></i>
+                            <strong>Phone:</strong><br>
+                            <span class="ms-4">+91 98765 43210</span>
+                        </div>
+                        <div class="mb-3">
+                            <i class="fas fa-envelope text-primary me-3"></i>
+                            <strong>Email:</strong><br>
+                            <span class="ms-4">info@freshbites.com</span>
+                        </div>
+                    </div>
+
+                    <!-- Map -->
+                    <div class="map-container">
+                        <iframe 
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3502.234567890123!2d77.2090212!3d28.6139391!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjjCsDM2JzUwLjIiTiA3N8KwMTInMzIuNSJF!5e0!3m2!1sen!2sin!4v1234567890123" 
+                            width="100%" 
+                            height="100%" 
+                            style="border:0;" 
+                            allowfullscreen="" 
+                            loading="lazy">
+                        </iframe>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Operating Hours -->
+            <div class="row mt-5">
+                <div class="col-lg-6">
+                    <div class="glass-card">
+                        <h3 class="mb-4">Operating Hours</h3>
+                        <table class="table">
+                            <tbody>
+                                <tr>
+                                    <td><strong>Monday - Friday</strong></td>
+                                    <td class="text-end">7:00 AM - 9:00 PM</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Saturday - Sunday</strong></td>
+                                    <td class="text-end">8:00 AM - 9:00 PM</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Public Holidays</strong></td>
+                                    <td class="text-end">9:00 AM - 7:00 PM</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Order Tracking -->
+                <div class="col-lg-6">
+                    <div class="glass-card">
+                        <h3 class="mb-4">Track Your Order</h3>
+                        <div class="mb-3">
+                            <label class="form-label">Enter Order ID</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control" placeholder="e.g., FB123456">
+                                <button class="btn btn-primary" onclick="trackOrder()">
+                                    <i class="fas fa-search"></i> Track
+                                </button>
+                            </div>
+                        </div>
+                        <div id="trackingResult" style="display:none;">
+                            <h5 class="mb-3">Order Status</h5>
+                            <div class="progress mb-2">
+                                <div class="progress-bar" id="orderProgress" role="progressbar" style="width: 75%">75%</div>
+                            </div>
+                            <p class="text-muted mb-0"><i class="fas fa-motorcycle me-2"></i>Out for delivery</p>
+                            <p class="text-muted"><small>Expected delivery: 7:30 PM</small></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- FAQ Section -->
+            <div class="mt-5">
+                <h2 class="section-title">Frequently Asked Questions</h2>
+                <div class="accordion" id="faqAccordion">
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#faq1">
+                                How do I subscribe to FreshBites?
+                            </button>
+                        </h2>
+                        <div id="faq1" class="accordion-collapse collapse show" data-bs-parent="#faqAccordion">
+                            <div class="accordion-body">
+                                You can subscribe by choosing a plan on our homepage and clicking the "Subscribe Now" button. You can also call us or send a WhatsApp message to get started.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq2">
+                                Can I customize my meals?
+                            </button>
+                        </h2>
+                        <div id="faq2" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                            <div class="accordion-body">
+                                Yes! We offer meal customization based on your dietary preferences, allergies, and taste preferences. Simply let us know your requirements when subscribing.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq3">
+                                What are your delivery timings?
+                            </button>
+                        </h2>
+                        <div id="faq3" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                            <div class="accordion-body">
+                                Breakfast: 7:00 AM - 9:00 AM | Lunch: 12:00 PM - 2:00 PM | Dinner: 7:00 PM - 9:00 PM. You can specify your preferred delivery time within these windows.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq4">
+                                How do I pause or cancel my subscription?
+                            </button>
+                        </h2>
+                        <div id="faq4" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                            <div class="accordion-body">
+                                You can pause your subscription anytime by contacting us 24 hours in advance. For cancellations, please provide 3 days notice for a full refund of unused days.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq5">
+                                Do you provide meals for special diets?
+                            </button>
+                        </h2>
+                        <div id="faq5" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                            <div class="accordion-body">
+                                Absolutely! We cater to various dietary requirements including vegan, gluten-free, diabetic-friendly, and low-carb diets. Consult with our nutrition team for personalized meal plans.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="row g-4">
+                <div class="col-lg-4">
+                    <h4 class="mb-3">
+                        <i class="fas fa-bowl-food"></i> FreshBites
+                    </h4>
+                    <p>Delivering healthy, home-cooked meals to your doorstep since 2020. Quality food, quality life.</p>
+                    <div class="social-links mt-4">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <h5 class="mb-3">Quick Links</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="#home" class="text-white text-decoration-none"><i class="fas fa-chevron-right me-2"></i>Home</a></li>
+                        <li class="mb-2"><a href="#about" class="text-white text-decoration-none"><i class="fas fa-chevron-right me-2"></i>About Us</a></li>
+                        <li class="mb-2"><a href="#plans" class="text-white text-decoration-none"><i class="fas fa-chevron-right me-2"></i>Pricing</a></li>
+                        <li class="mb-2"><a href="#contact" class="text-white text-decoration-none"><i class="fas fa-chevron-right me-2"></i>Contact</a></li>
+                        <li class="mb-2"><a href="#" class="text-white text-decoration-none"><i class="fas fa-chevron-right me-2"></i>Privacy Policy</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-4">
+                    <h5 class="mb-3">Newsletter</h5>
+                    <p>Subscribe to get updates on new menus and special offers!</p>
+                    <form id="newsletterForm" class="mt-3">
+                        <div class="input-group">
+                            <input type="email" class="form-control" placeholder="Your email" required>
+                            <button class="btn btn-primary" type="submit">
+                                <i class="fas fa-paper-plane"></i>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <hr class="my-4" style="border-color: rgba(255,255,255,0.1)">
+            <div class="text-center">
+                <p class="mb-0">&copy; 2024 FreshBites Tiffin Service. All rights reserved. Made with <i class="fas fa-heart text-danger"></i> in India</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- WhatsApp Float Button -->
+    <a href="https://wa.me/919876543210?text=Hi!%20I'd%20like%20to%20know%20more%20about%20FreshBites%20Tiffin%20Service" target="_blank" class="whatsapp-float">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <!-- Scroll to Top Button -->
+    <button class="btn btn-primary scroll-to-top" onclick="scrollToTop()">
+        <i class="fas fa-chevron-up"></i>
+    </button>
+
+    <!-- Meal Customizer Modal -->
+    <div class="modal fade" id="customizerModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title"><i class="fas fa-utensils me-2"></i>Customize Your Meal</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="customizerForm">
+                        <div class="mb-3">
+                            <label class="form-label">Select Meal Type</label>
+                            <select class="form-control" required>
+                                <option value="">Choose...</option>
+                                <option>Breakfast</option>
+                                <option>Lunch</option>
+                                <option>Dinner</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Dietary Preference</label>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="diet" id="veg" checked>
+                                <label class="form-check-label" for="veg">Vegetarian</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="diet" id="nonveg">
+                                <label class="form-check-label" for="nonveg">Non-Vegetarian</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="diet" id="vegan">
+                                <label class="form-check-label" for="vegan">Vegan</label>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Spice Level</label>
+                            <select class="form-control">
+                                <option>Mild</option>
+                                <option selected>Medium</option>
+                                <option>Spicy</option>
+                                <option>Extra Spicy</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Allergies or Restrictions</label>
+                            <textarea class="form-control" rows="2" placeholder="e.g., No onion, no garlic, gluten-free"></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Special Instructions</label>
+                            <textarea class="form-control" rows="2" placeholder="Any other preferences?"></textarea>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" onclick="saveCustomization()">
+                        <i class="fas fa-save me-2"></i>Save Preferences
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- GSAP -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+    <script>
+        // Loader
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                document.querySelector('.loader').classList.add('hidden');
+            }, 1000);
+        });
+
+        // Navbar scroll effect
+        window.addEventListener('scroll', () => {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+            
+            // Show/hide scroll to top button
+            const scrollBtn = document.querySelector('.scroll-to-top');
+            if (window.pageYOffset > 300) {
+                scrollBtn.style.display = 'block';
+            } else {
+                scrollBtn.style.display = 'none';
+            }
+        });
+
+        // Active nav link on scroll
+        const sections = document.querySelectorAll('section[id], div[id="home"]');
+        const navLinks = document.querySelectorAll('.nav-link');
+
+        window.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (scrollY >= (sectionTop - 200)) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href').slice(1) === current) {
+                    link.classList.add('active');
+                }
+            });
+        });
+
+        // Theme Toggle
+        function toggleTheme() {
+            const html = document.documentElement;
+            const icon = document.getElementById('themeIcon');
+            const currentTheme = html.getAttribute('data-theme');
+            
+            if (currentTheme === 'dark') {
+                html.setAttribute('data-theme', 'light');
+                icon.className = 'fas fa-moon';
+            } else {
+                html.setAttribute('data-theme', 'dark');
+                icon.className = 'fas fa-sun';
+            }
+        }
+
+        // Counter Animation
+        function animateCounter(element) {
+            const target = parseInt(element.getAttribute('data-target'));
+            const duration = 2000;
+            const step = target / (duration / 16);
+            let current = 0;
+
+            const timer = setInterval(() => {
+                current += step;
+                if (current >= target) {
+                    element.textContent = target + (element.parentElement.textContent.includes('%') ? '%' : '+');
+                    clearInterval(timer);
+                } else {
+                    element.textContent = Math.floor(current);
+                }
+            }, 16);
+        }
+
+        // Intersection Observer for counters
+        const counterObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    animateCounter(entry.target);
+                    counterObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.5 });
+
+        document.querySelectorAll('.counter').forEach(counter => {
+            counterObserver.observe(counter);
+        });
+
+        // Form Validation
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            if (this.checkValidity()) {
+                alert('Thank you for your message! We will get back to you soon!');
+                this.reset();
+            } else {
+                this.classList.add('was-validated');
+            }
+        });
+
+        // Newsletter Form
+        document.getElementById('newsletterForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            if (this.checkValidity()) {
+                alert('Thank you for subscribing to our newsletter!');
+                this.reset();
+            }
+        });
+
+        // Order Tracking Function
+        function trackOrder() {
+            const orderInput = document.querySelector('input[placeholder*="Order ID"]');
+            const trackingResult = document.getElementById('trackingResult');
+            
+            if (orderInput.value.trim() !== '') {
+                trackingResult.style.display = 'block';
+                
+                // Simulate order tracking progress
+                const progressBar = document.getElementById('orderProgress');
+                progressBar.style.width = '75%';
+                progressBar.textContent = '75%';
+                
+                // Add some animation
+                gsap.fromTo(progressBar, 
+                    { width: '0%' }, 
+                    { width: '75%', duration: 1, ease: 'power2.out' }
+                );
+            } else {
+                alert('Please enter your order ID');
+            }
+        }
+
+        // Meal Customization Save Function
+        function saveCustomization() {
+            const modal = document.getElementById('customizerModal');
+            const modalInstance = bootstrap.Modal.getInstance(modal);
+            
+            alert('Your meal preferences have been saved successfully!');
+            modalInstance.hide();
+            
+            // Reset form
+            document.getElementById('customizerForm').reset();
+        }
+
+        // Scroll to Top Function
+        function scrollToTop() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Initialize GSAP animations
+        gsap.registerPlugin(ScrollTrigger);
+
+        // Animate elements on scroll
+        gsap.utils.toArray('.glass-card').forEach(card => {
+            gsap.fromTo(card, 
+                { y: 50, opacity: 0 },
+                {
+                    y: 0,
+                    opacity: 1,
+                    duration: 0.8,
+                    scrollTrigger: {
+                        trigger: card,
+                        start: 'top 80%',
+                        end: 'bottom 20%',
+                        toggleActions: 'play none none reverse'
+                    }
+                }
+            );
+        });
+
+        // Animate service icons
+        gsap.utils.toArray('.service-icon').forEach(icon => {
+            gsap.fromTo(icon,
+                { scale: 0, rotation: -180 },
+                {
+                    scale: 1,
+                    rotation: 0,
+                    duration: 1,
+                    scrollTrigger: {
+                        trigger: icon,
+                        start: 'top 80%',
+                        toggleActions: 'play none none reverse'
+                    }
+                }
+            );
+        });
+
+        // Hero section animations
+        gsap.from('.hero-content h1', {
+            duration: 1,
+            y: 50,
+            opacity: 0,
+            ease: 'power3.out'
+        });
+
+        gsap.from('.hero-content p', {
+            duration: 1,
+            y: 30,
+            opacity: 0,
+            delay: 0.3,
+            ease: 'power3.out'
+        });
+
+        gsap.from('.hero-content .btn', {
+            duration: 1,
+            y: 30,
+            opacity: 0,
+            delay: 0.6,
+            ease: 'power3.out',
+            stagger: 0.2
+        });
+
+        gsap.from('.hero-image', {
+            duration: 1,
+            x: 50,
+            opacity: 0,
+            delay: 0.8,
+            ease: 'power3.out'
+        });
+
+        // Pricing cards hover effect
+        document.querySelectorAll('.pricing-card').forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                gsap.to(card, {
+                    scale: 1.05,
+                    duration: 0.3,
+                    ease: 'power2.out'
+                });
+            });
+            
+            card.addEventListener('mouseleave', () => {
+                gsap.to(card, {
+                    scale: 1,
+                    duration: 0.3,
+                    ease: 'power2.out'
+                });
+            });
+        });
+
+        // Testimonial carousel animation
+        const testimonialObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    gsap.fromTo(entry.target,
+                        { x: -100, opacity: 0 },
+                        { x: 0, opacity: 1, duration: 0.8, stagger: 0.2 }
+                    );
+                }
+            });
+        }, { threshold: 0.3 });
+
+        document.querySelectorAll('.testimonial-card').forEach(card => {
+            testimonialObserver.observe(card);
+        });
+
+        console.log('FreshBites Tiffin Service website initialized successfully!');
+    </script>
+</body>
+</html>
